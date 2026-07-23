@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #132238;
+    margin: 0
+}
+
+.container {
+    max-width: 850px;
+    margin: auto;
+    padding: 2rem
+}
+
+form,
+.toolbar,
+.task {
+    display: flex;
+    gap: 1rem;
+    align-items: end;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1rem
+}
+
+.task {
+    justify-content: space-between
+}
+
+label {
+    display: grid;
+    gap: .35rem;
+    flex: 1
+}
+
+input,
+select,
+button {
+    padding: .7rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px
+}
+
+button {
+    background: #1457d9;
+    color: #fff;
+    cursor: pointer
+}
