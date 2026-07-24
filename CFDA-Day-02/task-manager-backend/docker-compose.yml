@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: task-manager-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: task_manager_db
+      POSTGRES_USER: task_user
+      POSTGRES_PASSWORD: task_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - task_manager_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U task_user -d task_manager_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: .
+    container_name: task-manager-backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      DATABASE_URL: postgresql://task_user:task_password@postgres:5432/task_manager_db
+      FRONTEND_URL: http://localhost:5173
+    ports:
+      - "5000:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  task_manager_postgres_data:
